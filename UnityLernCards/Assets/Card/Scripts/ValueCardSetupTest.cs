@@ -3,9 +3,9 @@ using UnityEngine;
 public class ValueCardSetupTest : MonoBehaviour
 {
     [SerializeField] private CardsContainer _cardsContainer;
-    [SerializeField] private Vector2Int _manaDiapasone = new Vector2Int(-2, 9);
     [SerializeField] private Vector2Int _healthDiapasone = new Vector2Int(-2, 9);
     [SerializeField] private Vector2Int _damageDiapasone = new Vector2Int(-2, 9);
+    [SerializeField] private Vector2Int _manaDiapasone = new Vector2Int(-2, 9);
 
     public void RandomizeCardsValues()
     {

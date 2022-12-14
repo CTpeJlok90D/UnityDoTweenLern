@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -19,7 +20,7 @@ public class CardView : MonoBehaviour
     [SerializeField] private Color _goodCharacteristicColor = Color.green;
     [SerializeField] private Color _standartharacteristicColor = Color.white;
     [SerializeField] private Color _changedCharactericticColor = Color.cyan;
-    [SerializeField] private float _colorChangeDituration = 0.12f;
+    [SerializeField] private float _colorChangeDituration = 0.5f;
 
     private float _standartScale;
     private Sequence _previewSequice;
@@ -51,40 +52,44 @@ public class CardView : MonoBehaviour
         UpdateAll();
     }
 
-    private void UpdateHealthView(int newValue)
+    private void UpdateHealthView(int oldValue,int newValue)
     {
-        CharacteristicChanged(newValue, _card.info.Health, _healthField);
+        CharacteristicChanged(oldValue, newValue, _card.info.Health, _healthField);
+        Debug.Log($"Health {newValue} old -> {oldValue}");
     }
 
-    private void UpdateDamageView(int newValue)
+    private void UpdateDamageView(int oldValue, int newValue)
     {
-        CharacteristicChanged(newValue, _card.info.Damage, _attackField);
+        CharacteristicChanged(oldValue, newValue, _card.info.Damage, _attackField);
+        Debug.Log($"Damage {newValue} old -> {oldValue}");
     }
 
-    private void UpdateManaView(int newValue)
+    private void UpdateManaView(int oldValue, int newValue)
     {
-        CharacteristicChanged(newValue, _card.info.Mana, _manaField);
+        CharacteristicChanged(oldValue, newValue, _card.info.Mana, _manaField);
+        Debug.Log($"Mana {newValue} old -> {oldValue}");
     }
 
-    private void CharacteristicChanged(int newValue, int standartValue, TMP_Text textField)
+    private void CharacteristicChanged(int oldValue, int newValue, int standartValue, TMP_Text textField)
     {
-        _previewSequice?.Kill();
-        textField.text = newValue.ToString();
-        Sequence sequence = DOTween.Sequence().Append(textField.DOColor(_changedCharactericticColor, _colorChangeDituration));
+        Color newColor;
         if (newValue < standartValue)
         {
-            sequence.Append(textField.DOColor(_badCharacteristicColor, _colorChangeDituration));
-            return;
+            newColor = _badCharacteristicColor;
         }
-        if (newValue > standartValue)
+        else if (newValue > standartValue)
         {
-            sequence.Append(textField.DOColor(_goodCharacteristicColor, _colorChangeDituration));
-            return;
+            newColor = _goodCharacteristicColor;
         }
-        if (newValue == standartValue)
+        else
         {
-            sequence.Append(textField.DOColor(_standartharacteristicColor, _colorChangeDituration));
-            return;
+            newColor = _standartharacteristicColor;
+        }
+        Sequence sequence = DOTween.Sequence();
+        for (int i = oldValue; i != newValue; i = i + (i < newValue ? 1 : -1))
+        {
+            sequence.Append(textField.DOColor(_changedCharactericticColor, _colorChangeDituration).OnComplete(() => textField.text = i.ToString()));
+            sequence.Append(textField.DOColor(newColor, _colorChangeDituration));
         }
         _previewSequice = sequence.Play();
     }

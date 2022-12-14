@@ -3,12 +3,12 @@ using UnityEngine.Events;
 
 public class Card : MonoBehaviour
 {
-    [SerializeField] private int _health;
-    [SerializeField] private int _mana;
     [SerializeField] private int _attackStrench;
-    [SerializeField] private UnityEvent<int> _healthChanged = new();
-    [SerializeField] private UnityEvent<int> _manaChanged = new();
-    [SerializeField] private UnityEvent<int> _attackChanged = new();
+    [SerializeField] private int _mana;
+    [SerializeField] private int _health;
+    [SerializeField] private UnityEvent<int,int> _healthChanged = new();
+    [SerializeField] private UnityEvent<int,int> _manaChanged = new();
+    [SerializeField] private UnityEvent<int,int> _attackChanged = new();
     [Header("Optionality")]
     [SerializeField] private CardInfo _cardInfo;
 
@@ -30,8 +30,9 @@ public class Card : MonoBehaviour
         }
         set
         {
+            int oldValue = _health;
             _health = value;
-            _healthChanged.Invoke(_health);
+            _healthChanged.Invoke(oldValue, _health);
         }
     }
     public int Mana
@@ -42,8 +43,9 @@ public class Card : MonoBehaviour
         }
         set
         {
+            int oldValue = _mana;
             _mana = value;
-            _manaChanged.Invoke(_mana);
+            _manaChanged.Invoke(oldValue, _mana);
         }
     }
     public int Damage
@@ -54,13 +56,14 @@ public class Card : MonoBehaviour
         }
         set
         {
+            int oldValue = _attackStrench;
             _attackStrench = value;
-            _attackChanged.Invoke(_attackStrench);
+            _attackChanged.Invoke(oldValue,_attackStrench);
         }
     }
-    public UnityEvent<int> HealthChanged => _healthChanged;
-    public UnityEvent<int> ManaChanged => _manaChanged;
-    public UnityEvent<int> AttackStrenchChanged => _attackChanged;
+    public UnityEvent<int, int> HealthChanged => _healthChanged;
+    public UnityEvent<int, int> ManaChanged => _manaChanged;
+    public UnityEvent<int, int> AttackStrenchChanged => _attackChanged;
     #endregion
     public CardInfo info => _cardInfo;
 
@@ -71,13 +74,4 @@ public class Card : MonoBehaviour
             Init(_cardInfo);
         }
     }
-
-#if UNITY_EDITOR
-    private void OnValidate()
-    {
-        _healthChanged.Invoke(Health);
-        _manaChanged.Invoke(Mana);
-        _attackChanged.Invoke(Damage);
-    }
-#endif
 }

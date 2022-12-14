@@ -472,9 +472,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e342f37ecc850a34db7b2ec061df2173, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 0
-  _mana: 0
   _attackStrench: 0
+  _mana: 0
+  _health: 0
   _healthChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -511,7 +511,7 @@ MonoBehaviour:
   _goodCharacteristicColor: {r: 0, g: 1, b: 0, a: 1}
   _standartharacteristicColor: {r: 1, g: 1, b: 1, a: 1}
   _changedCharactericticColor: {r: 0, g: 1, b: 1, a: 1}
-  _colorChangeDituration: 0.3
+  _colorChangeDituration: 0.15
 --- !u!61 &1661338291975752017
 BoxCollider2D:
   m_ObjectHideFlags: 0

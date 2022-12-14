@@ -7,7 +7,7 @@ public class ValueCardSetupTest : MonoBehaviour
     [SerializeField] private Vector2Int _healthDiapasone = new Vector2Int(-2, 9);
     [SerializeField] private Vector2Int _damageDiapasone = new Vector2Int(-2, 9);
 
-    private void OnEnable()
+    public void RandomizeCardsValues()
     {
         foreach (Card card in _hand.Cards)
         {

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using DG.Tweening;
-using TMPro.SpriteAssetUtilities;
 using UnityEngine;
 
 public class HandView : MonoBehaviour
@@ -16,10 +15,10 @@ public class HandView : MonoBehaviour
 
     private void Start()
     {
-        PlaceCards();
+        UpdateCardPositions();
     }
 
-    public void PlaceCards()
+    public void UpdateCardPositions()
     {
         List<Card> cards = _hand.Cards;
         int cardsCount = _hand.Cards.Count;
@@ -48,11 +47,16 @@ public class HandView : MonoBehaviour
     private void OnEnable()
     {
         _hand.CardRemoved.AddListener(OnCardRemove);
+        _hand.CardAdded.AddListener(OnCardAdd);
     }
 
     private void OnCardRemove(Card card)
     {
-        PlaceCards();
+        UpdateCardPositions();
+    }
+    private void OnCardAdd(Card card)
+    {
+        UpdateCardPositions();
     }
 
 

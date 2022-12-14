@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Deckview : MonoBehaviour
 {
-    [SerializeField] private Deck _deck;
+    [SerializeField] private CardsContainer _deck;
     [SerializeField] private float _cardMoveAnimationSpeed = 0.5f;
 
     private void OnEnable()

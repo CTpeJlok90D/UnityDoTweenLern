@@ -22,7 +22,6 @@ public class CardView : MonoBehaviour
     [SerializeField] private float _colorChangeDituration = 0.12f;
 
     private float _standartScale;
-    private Vector3 _oldPosition;
     private Sequence _previewSequice;
 
     private void Awake()
@@ -32,13 +31,23 @@ public class CardView : MonoBehaviour
 
     private void OnEnable()
     {
-        _nameField.text = _card.info.Name;
-        _descriptionField.text = _card.info.Description;
-        _imagePlace.sprite = _card.info.Picture;
-
         _card.HealthChanged.AddListener(UpdateHealthView);
         _card.AttackStrenchChanged.AddListener(UpdateDamageView);
         _card.ManaChanged.AddListener(UpdateManaView);
+    }
+
+    private void OnDisable()
+    {
+        _card.HealthChanged.RemoveListener(UpdateHealthView);
+        _card.AttackStrenchChanged.RemoveListener(UpdateDamageView);
+        _card.ManaChanged.RemoveListener(UpdateManaView);
+    }
+
+    private void Start()
+    {
+        _nameField.text = _card.info.Name;
+        _descriptionField.text = _card.info.Description;
+        _imagePlace.sprite = _card.info.Picture;
         UpdateAll();
     }
 
@@ -88,13 +97,12 @@ public class CardView : MonoBehaviour
     }
     public void OnMouseEnter()
     {
-        _oldPosition = transform.position;
-        transform.DOMove(transform.position + _onMouseEnterPositionOffcet, _onMouseEnterScaleRiseTime);
+        transform.position += _onMouseEnterPositionOffcet;
         transform.DOScale(_onMouseEnterScale, _onMouseEnterScaleRiseTime);
     }
     public void OnMouseExit()
     {
-        transform.DOMove(_oldPosition, _onMouseEnterScaleRiseTime);
+        transform.position -= _onMouseEnterPositionOffcet;
         transform.DOScale(_standartScale, _onMouseEnterScaleRiseTime);
     }
 }

@@ -7,7 +7,7 @@ public class HandView : MonoBehaviour
     [SerializeField] private Hand _hand;
     [SerializeField] private Vector3 _circleCenterOffcet;
     [SerializeField] private float _circleRadius;
-    [SerializeField] private float _yOffcet = 0.1f;
+    [SerializeField] private float _zCardsOffcet = 0.1f;
     [SerializeField] private float _animationSpeed = 0.3f;
     private float _maxXCardPosition;
     private float _minXCardPosition;
@@ -29,7 +29,7 @@ public class HandView : MonoBehaviour
         {
             PlaceCard(card, currentCord, yPos);
             currentCord += stepSize;
-            yPos += _yOffcet;
+            yPos += _zCardsOffcet;
         }
     }
 
@@ -63,12 +63,17 @@ public class HandView : MonoBehaviour
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(_circleCenterOffcet + transform.position, _circleRadius);
+        float step = 0.1f;
         Gizmos.color = Color.red;
         Gizmos.DrawLine(new Vector3(transform.position.x + _maxXCardPosition, transform.position.y, transform.position.z), new Vector3(transform.position.x + _minXCardPosition, transform.position.y, transform.position.z));
-        Gizmos.DrawSphere(new Vector3(_maxXCardPosition + transform.position.x, transform.position.y, transform.position.z), 0.1f);
-        Gizmos.DrawSphere(new Vector3(-_maxXCardPosition + transform.position.x, transform.position.y, transform.position.z), 0.1f);
+        Gizmos.color = Color.cyan;
+        for (float i = _minXCardPosition; i < _maxXCardPosition - step; i += step)
+        {
+            Gizmos.DrawLine(new Vector2(i, GetYByX(i)) + _circleCenterPosition, new Vector2(i + step, GetYByX(i + step)) + _circleCenterPosition);
+        }
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(new Vector3(_maxXCardPosition + transform.position.x, transform.position.y, transform.position.z), step);
+        Gizmos.DrawSphere(new Vector3(-_maxXCardPosition + transform.position.x, transform.position.y, transform.position.z), step);
     }
     private void OnValidate()
     {

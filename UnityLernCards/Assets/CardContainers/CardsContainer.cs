@@ -36,4 +36,15 @@ public class CardsContainer : MonoBehaviour
         card.transform.SetParent(null);
         _cardRemoved.Invoke(card);
     }
+
+    public void RemoveDeadCards()
+    {
+        foreach (Card card in Cards)
+        {
+            if (card.Health <= 0)
+            {
+                RemoveCard(card);
+            }
+        }
+    }
 }

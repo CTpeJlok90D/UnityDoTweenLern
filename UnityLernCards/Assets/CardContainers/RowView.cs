@@ -4,6 +4,7 @@ using UnityEngine;
 public class RowView : MonoBehaviour
 {
     [SerializeField] private CardsContainer _container;
+    [SerializeField] private CardsContainer _trashDeck;
     [SerializeField] private float _lenght = 3f;
     [SerializeField] private float _spaceBetweenCards = 0.5f;
     [SerializeField] private float _animationDeturation = 0.1f;
@@ -12,6 +13,11 @@ public class RowView : MonoBehaviour
     {
         _container.CardAdded.AddListener(OnCardAdd);
         _container.CardRemoved.AddListener(OnCardRemove);
+    }  
+    private void OnDisable()
+    {
+        _container.CardAdded.RemoveListener(OnCardAdd);
+        _container.CardRemoved.RemoveListener(OnCardRemove);
     }
 
     private void OnCardAdd(Card card)
@@ -22,6 +28,7 @@ public class RowView : MonoBehaviour
     private void OnCardRemove(Card card)
     {
         UpdateCardPositions();
+        _trashDeck.AddCard(card);
     }
 
     private void Start()

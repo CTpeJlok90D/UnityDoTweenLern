@@ -36,7 +36,6 @@ public class HandView : MonoBehaviour
     private void PlaceCard(Card card, float x, float y)
     {
         card.transform.DOMove(new Vector3(_circleCenterPosition.x + x, _circleCenterPosition.y + GetYByX(x), y), _animationSpeed);
-        card.transform.up = -_circleCenterPosition*10;
     }
 
     private float GetYByX(float X)

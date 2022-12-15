@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class HandView : MonoBehaviour
 {
-    [SerializeField] private Hand _hand;
+    [SerializeField] private CardsContainer _hand;
     [SerializeField] private Vector3 _circleCenterOffcet;
     [SerializeField] private float _circleRadius;
-    [SerializeField] private float _zCardsOffcet = 0.1f;
+    [SerializeField] private float _zCardsOffcet = -0.1f;
     [SerializeField] private float _animationSpeed = 0.3f;
     private float _maxXCardPosition;
     private float _minXCardPosition;
@@ -25,12 +24,12 @@ public class HandView : MonoBehaviour
         int cardsCount = _hand.Cards.Count;
         float stepSize = (_maxXCardPosition * 2) / cardsCount;
         float currentCord = _minXCardPosition + stepSize/2;
-        float yPos = 0;
+        float zPos = _zCardsOffcet;
         foreach (Card card in cards)
         {
-            PlaceCard(card, currentCord, yPos);
+            PlaceCard(card, currentCord, zPos);
             currentCord += stepSize;
-            yPos += _zCardsOffcet;
+            zPos += _zCardsOffcet;
         }
     }
 
@@ -39,7 +38,7 @@ public class HandView : MonoBehaviour
         Vector3 finishPoint = new Vector3(_circleCenterPosition.x + x, _circleCenterPosition.y + GetYByX(x), y);
         Vector3 rotate = finishPoint - (Vector3)_circleCenterPosition;
         card.transform.up = new Vector3(rotate.x, rotate.y, 0);
-        card.transform.DOMove(finishPoint, _animationSpeed);
+        card.DOMove(finishPoint, _animationSpeed);
     }
 
     private float GetYByX(float X)

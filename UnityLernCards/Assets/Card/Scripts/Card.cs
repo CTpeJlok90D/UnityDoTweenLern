@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -9,8 +10,15 @@ public class Card : MonoBehaviour
     [SerializeField] private UnityEvent<int,int> _healthChanged = new();
     [SerializeField] private UnityEvent<int,int> _manaChanged = new();
     [SerializeField] private UnityEvent<int,int> _attackChanged = new();
+    [SerializeField] private UnityEvent _moveStarted = new();
+    [SerializeField] private UnityEvent _moveEnded = new();
+    [SerializeField] private UnityEvent _drugStarted = new();
+    [SerializeField] private UnityEvent _drugEnded = new();
+    [SerializeField] private Collider2D _collider;
     [Header("Optionality")]
     [SerializeField] private CardInfo _cardInfo;
+
+    private static Card _lastMouseOnCard;
 
     public Card Init(CardInfo info)
     {
@@ -64,6 +72,11 @@ public class Card : MonoBehaviour
     public UnityEvent<int, int> HealthChanged => _healthChanged;
     public UnityEvent<int, int> ManaChanged => _manaChanged;
     public UnityEvent<int, int> AttackStrenchChanged => _attackChanged;
+    public static Card LastMouseOnCard => _lastMouseOnCard;
+    public Collider2D Collider => _collider;
+    public UnityEvent MoveStarted => _moveStarted;
+    public UnityEvent DrugEnded => _moveEnded;
+    public UnityEvent DrugStarted => _drugStarted;
     #endregion
     public CardInfo info => _cardInfo;
 
@@ -73,5 +86,43 @@ public class Card : MonoBehaviour
         {
             Init(_cardInfo);
         }
+    }
+
+    private void OnEnable()
+    {
+        _moveStarted.AddListener(OnMoveStart);
+        _moveEnded.AddListener(OnMoveEnd);
+    }
+
+    private void OnDisable()
+    {
+        _moveStarted.RemoveListener(OnMoveStart);
+        _moveEnded.RemoveListener(OnMoveStart);
+    }
+
+    private void OnMoveStart()
+    {
+        _collider.enabled = false;
+    }
+
+    private void OnMoveEnd()
+    {
+        _collider.enabled = true;
+    }
+
+    private void OnMouseEnter()
+    {
+        _lastMouseOnCard = this;
+    }
+
+    private void OnMouseExit() 
+    {
+        _lastMouseOnCard = null;
+    }
+
+    public void DOMove(Vector3 position, float duration) 
+    {
+        _moveStarted.Invoke();
+        transform.DOMove(position, duration).OnComplete(_moveEnded.Invoke);
     }
 }

@@ -6,7 +6,10 @@ public class CardsContainer : MonoBehaviour
 {
     [SerializeField] private UnityEvent<Card> _cardAdded;
     [SerializeField] private UnityEvent<Card> _cardRemoved;
+    [SerializeField] private CardsContainer _trashDeck;
 
+    private static CardsContainer _cardContainerMouseOn;
+    public static CardsContainer CardContainerMouseOn => _cardContainerMouseOn;
     public UnityEvent<Card> CardAdded => _cardAdded;
     public UnityEvent<Card> CardRemoved => _cardRemoved;
     public List<Card> Cards
@@ -35,7 +38,7 @@ public class CardsContainer : MonoBehaviour
     {
         card.transform.SetParent(null);
         _cardRemoved.Invoke(card);
-    }
+    }   
 
     public void RemoveDeadCards()
     {
@@ -43,8 +46,18 @@ public class CardsContainer : MonoBehaviour
         {
             if (card.Health <= 0)
             {
-                RemoveCard(card);
+                _trashDeck.AddCard(card);
             }
         }
+    }
+
+    public void OnMouseEnter()
+    {
+        _cardContainerMouseOn = this;
+    }
+
+    public void OnMouseExit()
+    {
+        _cardContainerMouseOn = null;
     }
 }

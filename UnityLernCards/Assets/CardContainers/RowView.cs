@@ -8,6 +8,7 @@ public class RowView : MonoBehaviour
     [SerializeField] private float _lenght = 3f;
     [SerializeField] private float _spaceBetweenCards = 0.5f;
     [SerializeField] private float _animationDeturation = 0.1f;
+    [SerializeField] private float _zCardPositionOffcet = 0.2f;
 
     private void OnEnable()
     {
@@ -21,14 +22,13 @@ public class RowView : MonoBehaviour
     }
 
     private void OnCardAdd(Card card)
-    {
+    {   
         UpdateCardPositions();
     }
 
     private void OnCardRemove(Card card)
     {
         UpdateCardPositions();
-        _trashDeck.AddCard(card);
     }
 
     private void Start()
@@ -42,7 +42,9 @@ public class RowView : MonoBehaviour
         float currentX = (_lenght - step) / -2;
         foreach (Card card in _container.Cards)
         {
-            card.transform.DOMove(new Vector3(transform.position.x + currentX, transform.position.y), _animationDeturation);
+            card.transform.rotation = Quaternion.identity;
+            Vector3 newCardPosition = new Vector3(transform.position.x + currentX, transform.position.y, transform.position.z + _zCardPositionOffcet);
+            card.DOMove(newCardPosition, _animationDeturation);
             currentX += step;
         }
     }

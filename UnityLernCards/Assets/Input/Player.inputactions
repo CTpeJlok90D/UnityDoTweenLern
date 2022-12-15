@@ -1,0 +1,34 @@
+{
+    "name": "Player",
+    "maps": [
+        {
+            "name": "Standart",
+            "id": "d91c468b-f815-4435-b671-165465c25add",
+            "actions": [
+                {
+                    "name": "DrugCard",
+                    "type": "Button",
+                    "id": "3650efea-79d6-4071-90b5-c42347c52e46",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "6018cc77-e77d-45fc-bf74-82ec163c2dc1",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DrugCard",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

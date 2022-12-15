@@ -46,6 +46,6 @@ public class Deckview : MonoBehaviour
         Vector3 oldPosition = card.transform.position;
         ArrangeCards();
         card.transform.position = oldPosition;
-        card.transform.DOMove(transform.position, _cardMoveAnimationDituration);
+        card.DOMove(transform.position, _cardMoveAnimationDituration);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class HandView : MonoBehaviour
 {
@@ -35,7 +36,10 @@ public class HandView : MonoBehaviour
 
     private void PlaceCard(Card card, float x, float y)
     {
-        card.transform.DOMove(new Vector3(_circleCenterPosition.x + x, _circleCenterPosition.y + GetYByX(x), y), _animationSpeed);
+        Vector3 finishPoint = new Vector3(_circleCenterPosition.x + x, _circleCenterPosition.y + GetYByX(x), y);
+        Vector3 rotate = finishPoint - (Vector3)_circleCenterPosition;
+        card.transform.up = new Vector3(rotate.x, rotate.y, 0);
+        card.transform.DOMove(finishPoint, _animationSpeed);
     }
 
     private float GetYByX(float X)

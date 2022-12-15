@@ -24,7 +24,8 @@ public class Deckview : MonoBehaviour
         for (int i = 0; i < _deck.Cards.Count; i++)
         {
             _deck.Cards[i].transform.DOKill();
-            _deck.Cards[i].transform.position = transform.position + new Vector3(0, 0, _distanceBetweenCards) * (i+1);
+            _deck.Cards[i].transform.position = transform.position + new Vector3(0, 0, _distanceBetweenCards) * (i + 1);
+            _deck.Cards[i].transform.up = Vector3.up;
         }
         if (_deck.Cards.Count < _cardLoadCount)
         {

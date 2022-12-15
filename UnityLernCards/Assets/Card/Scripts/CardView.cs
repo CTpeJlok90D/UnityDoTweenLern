@@ -55,19 +55,16 @@ public class CardView : MonoBehaviour
     private void UpdateHealthView(int oldValue,int newValue)
     {
         CharacteristicChanged(oldValue, newValue, _card.info.Health, _healthField);
-        Debug.Log($"Health {newValue} old -> {oldValue}");
     }
 
     private void UpdateDamageView(int oldValue, int newValue)
     {
         CharacteristicChanged(oldValue, newValue, _card.info.Damage, _attackField);
-        Debug.Log($"Damage {newValue} old -> {oldValue}");
     }
 
     private void UpdateManaView(int oldValue, int newValue)
     {
         CharacteristicChanged(oldValue, newValue, _card.info.Mana, _manaField);
-        Debug.Log($"Mana {newValue} old -> {oldValue}");
     }
 
     private void CharacteristicChanged(int oldValue, int newValue, int standartValue, TMP_Text textField)
@@ -88,9 +85,12 @@ public class CardView : MonoBehaviour
         Sequence sequence = DOTween.Sequence();
         for (int i = oldValue; i != newValue; i = i + (i < newValue ? 1 : -1))
         {
-            sequence.Append(textField.DOColor(_changedCharactericticColor, _colorChangeDituration).OnComplete(() => textField.text = i.ToString()));
+            int newI = i;
+            sequence.Append(textField.DOColor(_changedCharactericticColor, _colorChangeDituration).OnComplete(() => textField.text = newI.ToString()));
             sequence.Append(textField.DOColor(newColor, _colorChangeDituration));
         }
+        sequence.Append(textField.DOColor(_changedCharactericticColor, _colorChangeDituration).OnComplete(() => textField.text = newValue.ToString()));
+        sequence.Append(textField.DOColor(newColor, _colorChangeDituration));
         _previewSequice = sequence.Play();
     }
 

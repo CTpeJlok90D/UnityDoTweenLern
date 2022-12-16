@@ -4,6 +4,7 @@ using UnityEngine.Events;
 
 public class Card : MonoBehaviour
 {
+    public bool CanDrug = true;
     [SerializeField] private int _attackStrench;
     [SerializeField] private int _mana;
     [SerializeField] private int _health;
@@ -17,8 +18,8 @@ public class Card : MonoBehaviour
     [SerializeField] private Collider2D _collider;
     [Header("Optionality")]
     [SerializeField] private CardInfo _cardInfo;
-
     private static Card _lastMouseOnCard;
+    
 
     public Card Init(CardInfo info)
     {
@@ -75,7 +76,7 @@ public class Card : MonoBehaviour
     public static Card LastMouseOnCard => _lastMouseOnCard;
     public Collider2D Collider => _collider;
     public UnityEvent MoveStarted => _moveStarted;
-    public UnityEvent DrugEnded => _moveEnded;
+    public UnityEvent DrugEnded => _drugEnded;
     public UnityEvent DrugStarted => _drugStarted;
     #endregion
     public CardInfo info => _cardInfo;
@@ -112,11 +113,19 @@ public class Card : MonoBehaviour
 
     private void OnMouseEnter()
     {
+        if (CanDrug == false)
+        {
+            return;
+        }
         _lastMouseOnCard = this;
     }
 
     private void OnMouseExit() 
     {
+        if (CanDrug == false)
+        {
+            return;
+        }
         _lastMouseOnCard = null;
     }
 

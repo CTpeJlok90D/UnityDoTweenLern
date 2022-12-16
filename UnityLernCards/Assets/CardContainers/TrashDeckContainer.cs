@@ -7,6 +7,7 @@ public class TrashDeckContainer : CardsContainer
     
     private void OnCardAdd(Card card)
     {
+        card.CanDrug = false;
         card.Collider.enabled = false;
     }
 }

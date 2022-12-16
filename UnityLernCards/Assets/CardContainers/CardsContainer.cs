@@ -46,6 +46,7 @@ public class CardsContainer : MonoBehaviour
         {
             if (card.Health <= 0)
             {
+                RemoveCard(card);
                 _trashDeck.AddCard(card);
             }
         }

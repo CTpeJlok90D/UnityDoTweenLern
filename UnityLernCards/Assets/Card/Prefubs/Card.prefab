@@ -183,7 +183,7 @@ GameObject:
   - component: {fileID: 8723377913519376835}
   - component: {fileID: 3185422642529518121}
   m_Layer: 0
-  m_Name: Phone
+  m_Name: Frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -484,6 +484,19 @@ MonoBehaviour:
   _attackChanged:
     m_PersistentCalls:
       m_Calls: []
+  _moveStarted:
+    m_PersistentCalls:
+      m_Calls: []
+  _moveEnded:
+    m_PersistentCalls:
+      m_Calls: []
+  _drugStarted:
+    m_PersistentCalls:
+      m_Calls: []
+  _drugEnded:
+    m_PersistentCalls:
+      m_Calls: []
+  _collider: {fileID: 1661338291975752017}
   _cardInfo: {fileID: 0}
 --- !u!114 &4694705802952204624
 MonoBehaviour:
@@ -504,6 +517,7 @@ MonoBehaviour:
   _healthField: {fileID: 1449921215043311811}
   _attackField: {fileID: 7510436913223276056}
   _imagePlace: {fileID: 1016268585112477503}
+  _frameSpriteRenderer: {fileID: 3185422642529518121}
   _onMouseEnterScale: 1.15
   _onMouseEnterScaleRiseTime: 0.2
   _onMouseEnterPositionOffcet: {x: 0, y: 0, z: -5}
@@ -511,6 +525,7 @@ MonoBehaviour:
   _goodCharacteristicColor: {r: 0, g: 1, b: 0, a: 1}
   _standartharacteristicColor: {r: 1, g: 1, b: 1, a: 1}
   _changedCharactericticColor: {r: 0, g: 1, b: 1, a: 1}
+  _drugedColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   _colorChangeDituration: 0.15
 --- !u!61 &1661338291975752017
 BoxCollider2D:
